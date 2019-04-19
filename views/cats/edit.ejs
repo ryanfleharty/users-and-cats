@@ -8,6 +8,13 @@
 </head>
 <body>
     <form action="/cats/<%= catOnTheTemplate._id%>?_method=PUT" method="POST">
+            owner: <select name="userId">
+        <% for (let i = 0; i < usersOnTemplate.length; i++) {%>
+          <option value="<%=usersOnTemplate[i]._id%>"><%=usersOnTemplate[i].username%>
+          </option>
+
+          <%}%>
+        </select><br/>
         <input type="text" name="name" value="<%=catOnTheTemplate.name%>">
         <input type="number" name="age" value="<%=catOnTheTemplate.age%>">
         <input type="submit">

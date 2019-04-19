@@ -10,6 +10,12 @@
 <a href="/">GO HOME</a>
 <a href="/users">Go back to users Index</a>
     <h1>Here is an enslaver of cats named <%= userOnTheTemplate.username %></h1>
+    <ul>
+        <h2>Here are <%=userOnTheTemplate.username%>'s cats</h2>
+        <% for (let i = 0; i < userOnTheTemplate.cats.length; i++) {%>
+        <li><a href="/cats/<%=userOnTheTemplate.cats[i]._id%>"><%=userOnTheTemplate.cats[i].name%></a></li>
+        <%}%>
+    </ul>
     <a href="/users/<%=userOnTheTemplate._id%>/edit">CHANGE THIS USER</a>
 </body>
 </html>

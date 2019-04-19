@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Cat = require('../models/Cat');
 
 router.get('/', (req, res)=>{
     User.find({}, (err, usersFromTheDatabase)=>{
@@ -15,10 +16,17 @@ router.get('/new', (req, res)=>{
 })
 
 router.get('/:id', (req, res)=>{
-    User.findById(req.params.id, (err, userFromTheDatabase)=>{
-        res.render('users/show.ejs', {
-            userOnTheTemplate: userFromTheDatabase
-        });
+    User.findById(req.params.id) 
+    .populate('cats')
+    .exec((err, userFromTheDatabase)=>{
+        if(err){
+            res.send(err);
+        } else {
+            res.render('users/show.ejs', {
+                userOnTheTemplate: userFromTheDatabase
+            });
+        }
+
     })
 })
 
@@ -47,7 +55,14 @@ router.put('/:id', (req, res)=>{
 router.delete('/:id', (req, res)=>{
     User.findByIdAndDelete(req.params.id, (err, userFromTheDatabase)=>{
         console.log(userFromTheDatabase);
-        res.redirect('/users');
+        Cat.deleteMany({
+            _id: {
+                $in: userFromTheDatabase.cats
+            }
+        }, (err, data)=>{
+            console.log(data);
+            res.redirect('/users');
+        })
     })
 })
 
