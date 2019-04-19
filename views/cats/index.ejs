@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <% catsOnTheTemplate.forEach((cat)=>{ %>
+        <li>
+            <a href="/cats/<%=cat._id%>"><%=cat.name%></a>
+            <p>This cat is <%=cat.age%> years old</p>
+            <form action="/cats/<%=cat._id%>?_method=DELETE" method="POST">
+                <button>DELETE</button>
+            </form>
+        </li>
+    <% }) %>
+</body>
+</html>
